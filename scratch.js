@@ -5,7 +5,7 @@ Steps to complete:
 [] Update readme
 [x] MVC directory/file structure 
   [x] Need "controller" instead of "routes"?
-[] Handlebars templates
+[x] Handlebars templates
 
 =================================
 Who/What/Where

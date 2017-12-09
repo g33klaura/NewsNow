@@ -29,15 +29,14 @@ db.on("error", function(error) {
 
 // Handlebars setup
 // Serve static content for the app from the "public" directory in the application directory
-app.use(express.static('app/public'));
+app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Set default handlebars template
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
-app.set('view engine', path.join(__dirname, 'app/views'), 'handlebars');
-// app.set('views', path.join(__dirname, 'app/views'), 'handlebars');
-
+// app.set('view engine', path.join(__dirname, 'app/views'), 'handlebars');
+app.set('view engine', 'handlebars');
 
 // VARIABLES
 // ==========================================

@@ -50,7 +50,7 @@ var scrapeTime = new Date(Date.now()).toLocaleString();
 //   res.send("Hello world");
 // });
 
-var routes = require('./app/controller/api-routes.js');
+var routes = require('./controller/api-routes.js');
 app.use("/", routes);
 
 // index route loads view.html    ***worked except couldn't load js scripts

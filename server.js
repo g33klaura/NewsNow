@@ -7,6 +7,8 @@ var express = require("express");
 var mongojs = require("mongojs");
 var request = require("request");
 var cheerio = require("cheerio");
+var exphbs = require("express-handlebars");
+var bodyParser = require("body-parser");
 var path = require("path");
 
 // Initialize Express
@@ -16,18 +18,43 @@ var app = express();
 var databaseUrl = "newsNow";
 var collections = ["scrapedNews"];
 
+
+// SETUP
+// ==========================================
 // Hook mongojs configuration to the db variable
 var db = mongojs(databaseUrl, collections);
 db.on("error", function(error) {
   console.log("Database Error:", error);
 });
 
-// Main route (simple Hello World Message)
-app.get("/", function(req, res) {
-  res.send("Hello world");
-});
+// Handlebars setup
+// Serve static content for the app from the "public" directory in the application directory
+app.use(express.static('app/public'));
 
-// index route loads view.html
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Set default handlebars template
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', path.join(__dirname, 'app/views'), 'handlebars');
+// app.set('views', path.join(__dirname, 'app/views'), 'handlebars');
+
+
+// VARIABLES
+// ==========================================
+// Add the time the scrape was completed
+var scrapeTime = new Date(Date.now()).toLocaleString();
+
+// ROUTING
+// ==========================================
+// Main route (simple Hello World Message)
+// app.get("/", function(req, res) {
+//   res.send("Hello world");
+// });
+
+var routes = require('./app/controller/api-routes.js');
+app.use("/", routes);
+
+// index route loads view.html    ***worked except couldn't load js scripts
 // From 15-Sequelized>Sat>15-Post-Author_joins
 // app.get("/", function(req, res) {
 //   res.sendFile(path.join(__dirname, "app/public/index.html"));
@@ -48,6 +75,7 @@ app.get("/all", function(req, res) {
   });
 });
 
+// Route for scraping new articles
 // Scrape data from one site and place it into the mongodb db
 app.get("/scrape", function(req, res) {
   // Make a request for the news section of ycombinator
@@ -81,11 +109,14 @@ app.get("/scrape", function(req, res) {
     });
   });
 
-  // Add the time the scrape was completed
-  var scrapeTime = new Date(Date.now()).toLocaleString();
-
-  // Send a "Scrape Complete" message to the browser
+  // Send a "Scrape Complete" message with current time to the browser
   res.send("Scrape Complete at " + scrapeTime);
+});
+
+
+// Route for retrieving saved articles
+app.get("/saved", function(req, res) {
+
 });
 
 

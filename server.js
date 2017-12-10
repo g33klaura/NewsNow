@@ -6,10 +6,20 @@
 var express = require("express");
 var mongojs = require("mongojs");
 var request = require("request");
-var cheerio = require("cheerio");
 var exphbs = require("express-handlebars");
 var bodyParser = require("body-parser");
 var path = require("path");
+var logger = require("morgan");
+var mongoose = require("mongoose");
+
+// Scraping tools
+var axios = require("axios");
+var cheerio = require("cheerio");
+
+// Require all models
+var db = require("./models");
+
+var PORT = 3000;  //Will need env port once deployed?
 
 // Initialize Express
 var app = express();
@@ -59,7 +69,7 @@ app.use("/", routes);
 //   res.sendFile(path.join(__dirname, "app/public/index.html"));
 // });
 
-// Retrieve data from the db
+// Retrieve data from the db (all currently-scraped articles)
 app.get("/all", function(req, res) {
   // Find all results from the scrapedNews collection in the db
   db.scrapedNews.find({}, function(error, found) {
@@ -119,7 +129,7 @@ app.get("/saved", function(req, res) {
 });
 
 
-// Listen on port 3000
-app.listen(3000, function() {
-  console.log("App running on port 3000!");
+// Listen on port set in variable above (depending on environment)
+app.listen(PORT, function() {
+  console.log("App running on port " + PORT);
 });

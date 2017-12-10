@@ -7,6 +7,14 @@ Steps to complete:
   [x] Need "controller" instead of "routes"?
 [x] Handlebars templates
 
+Routes needed 
+[] scrape new articles
+[] display scraped articles
+[] save article (and delete from scraped list?)
+[] save note to article
+[] delete article from saved
+[]
+
 =================================
 Who/What/Where
 

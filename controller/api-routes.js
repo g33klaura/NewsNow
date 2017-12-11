@@ -12,13 +12,8 @@ var db = require('../models');
 
 // ROUTES
 // ==========================================
-// Create all our routes and set up logic within those routes where required.
+// Route to display all currently-scraped articles, stored in db
 router.get('/', function (req, res) {
-
-  // this "selectAll" is defined in burger.js (THE MODEL)~from ORM burger project
-  // this DATA is null.................
-
-  // var collection = req.db.get(articles);
 
   db.Article.find({}, {}, function (error, data) {
 
@@ -27,30 +22,20 @@ router.get('/', function (req, res) {
     } else {
 
       var hbsObject = {
+        // HAS TO BE MODEL NAME (breaks otherwise!)
         Article: data,
-        title: data.value
-        //     // collectionName as property?
-        //     // articles: {
-        //     //   title: value
-        //     // }
-        //     articles: articleElement.title.value
-
+        // title: data.value
+        // ^^Undefined... might not be needed
       }
-      //   console.log('api-routes, ln 24');
-      //   console.log(hbsObject);
-      //   res.render('index', hbsObject);
-      //   // res.render('index');
 
       // console.log(data);
-      // ^^Does grab title & link, in array, each as object........
-      console.log('ln 48 api-routes');
       console.log(hbsObject);
       res.render('index', hbsObject);
     }
   });
 
 }); //Closes router.get
-// });
+
 
 // EXPORTS
 // ==========================================

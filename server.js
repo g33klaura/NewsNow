@@ -1,6 +1,6 @@
 // From 18-mongodb>Thursday>11-Scraping-into-db
-    // may also need Thursday>10-mongojs-and-front-end
-    
+// may also need Thursday>10-mongojs-and-front-end
+
 // DEPENDENCIES
 // ==========================================
 var express = require('express');
@@ -13,17 +13,17 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 
 // Scraping tools
-var axios = require('axios');  //Not required for project; says to use request
+var axios = require('axios'); //Not required for project; says to use request
 var cheerio = require('cheerio');
 
-var PORT = 3000;  //Will need env port once deployed?************
+var PORT = 3000; //Will need env port once deployed?************
 
 // Initialize Express
 var app = express();
 
-// Database configuration
-var databaseUrl = 'newsNow';
-var collections = ['scrapedNews'];
+// Database configuration ~ old MongoJS way
+// var databaseUrl = 'newsNow';
+// var collections = ['scrapedNews'];
 
 
 // SETUP
@@ -41,14 +41,18 @@ var db = require('./models');
 app.use(logger('dev'));
 
 // Use body-parser for handling form submissions
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
 // Handlebars setup
 // Serve static content for the app from the "public" directory in the application directory
 app.use(express.static('public'));
 
 // Set default handlebars template
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+}));
 // app.set('view engine', path.join(__dirname, 'app/views'), 'handlebars');
 app.set('view engine', 'handlebars');
 
@@ -82,16 +86,16 @@ app.use('/', routes);
 // ==========================================
 // Route for scraping new articles, using Mongoose
 // NEED TO TIE THIS TO THE BUTTON STILL  ~Should be working
-app.get('/scrape', function(req, res) {
+app.get('/scrape', function (req, res) {
 
   // Make a request for the news section of goodnewsnetwork
-  request('https://www.goodnewsnetwork.org/', function(error, response, html) {
-    
-  // Load the html body from request into cheerio
+  request('https://www.goodnewsnetwork.org/', function (error, response, html) {
+
+    // Load the html body from request into cheerio
     var $ = cheerio.load(html);
 
     // For each element that contains article elements
-    $('.thumb-wrap').each(function(i, element) {
+    $('.thumb-wrap').each(function (i, element) {
       // Save an empty result object
       var result = {};
 
@@ -101,27 +105,26 @@ app.get('/scrape', function(req, res) {
 
       // If this found element had both a title and a link
       if (result.title && result.link) {
-        
+
         // Create a new Article using the `result` object built from scraping
         // (Article is set in models)
         db.Article.create({
-          title: result.title,
-          link: result.link
-        },
-        function(err, scraped) {
-          if (err) {
-            console.log(err);
-          }
-          else {
-            console.log(scraped);
-          }
-        });
-      }  
+            title: result.title,
+            link: result.link
+          },
+          function (err, scraped) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(scraped);
+            }
+          });
+      }
       //^^if statement closes
     });
   });
   // If successful, send a message to the client
-  res.send('Scrape Complete at ' + scrapeTime); 
+  res.send('Scrape Complete at ' + scrapeTime);
 });
 // ==========================================
 
@@ -168,9 +171,9 @@ app.get('/scrape', function(req, res) {
 
 // ==========================================
 // Retrieve data from the db (all currently-scraped articles)  *******MAKE IT mongoose*******
-app.get('/all', function(req, res) {
+app.get('/all', function (req, res) {
   // Find all results from the scrapedNews collection in the db
-  db.Article.find({}, function(error, found) {
+  db.Article.find({}, function (error, found) {
     // Throw any errors to the console
     if (error) {
       console.log(error);
@@ -203,12 +206,12 @@ app.get('/all', function(req, res) {
 
 
 // Route for retrieving saved articles
-app.get('/saved', function(req, res) {
+app.get('/saved', function (req, res) {
 
 });
 
 
 // Listen on port set in variable above (depending on environment)
-app.listen(PORT, function() {
+app.listen(PORT, function () {
   console.log('App running on port ' + PORT);
 });

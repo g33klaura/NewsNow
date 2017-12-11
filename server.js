@@ -73,38 +73,21 @@ var scrapeTime = new Date(Date.now()).toLocaleString();
 //   res.send("Hello world");
 // });
 
+// Main route, render Handlebars index*****does this actually do anything yet..........
 var routes = require('./controller/api-routes.js');
 app.use('/', routes);
 
-// index route loads view.html    ***worked except couldn't load js scripts
-// From 15-Sequelized>Sat>15-Post-Author_joins
-// app.get("/", function(req, res) {
-//   res.sendFile(path.join(__dirname, "app/public/index.html"));
-// });
-
-// Retrieve data from the db (all currently-scraped articles)  *******WITH MONGOJS*******
-app.get('/all', function(req, res) {
-  // Find all results from the scrapedNews collection in the db
-  db.scrapedNews.find({}, function(error, found) {
-    // Throw any errors to the console
-    if (error) {
-      console.log(error);
-    }
-    // If there are no errors, send the data to the browser as json
-    else {
-      res.json(found);
-    }
-  });
-});
 
 // ==========================================
 // Route for scraping new articles, using Mongoose
+// NEED TO TIE THIS TO THE BUTTON STILL*******************
 app.get('/scrape', function(req, res) {
 
   // Make a request for the news section of goodnewsnetwork
   request('https://www.goodnewsnetwork.org/', function(error, response, html) {
-  // request('https://www.goodnewsnetwork.org/').then(function(response) {  
-    // Load the html body from request into cheerio
+  // axios.get('https://www.goodnewsnetwork.org/').then(function(response) {
+    
+  // Load the html body from request into cheerio
     var $ = cheerio.load(html);
     // var $ = cheerio.load(response.data);
 
@@ -125,9 +108,9 @@ app.get('/scrape', function(req, res) {
         db.Article
         .create(result)
         .then(function(dbArticle) {
+          // If successful, send a message to the client
+          res.send('Scrape Complete at ' + scrapeTime);
           console.log(dbArticle);
-          // If we were able to successfully scrape and save an Article, send a message to the client
-          res.send('Scrape Complete at ' + scrapeTime); 
         })
         .catch(function(err) {
           // If an error occurred, send it to the client
@@ -141,8 +124,6 @@ app.get('/scrape', function(req, res) {
   // // If we were able to successfully scrape and save an Article, send a message to the client
   // res.send('Scrape Complete at ' + scrapeTime); 
 });
-
-
 // ==========================================
 
 
@@ -182,6 +163,42 @@ app.get('/scrape', function(req, res) {
 //   });
 //   // Send a "Scrape Complete" message with current time to the browser
 //   res.send('Scrape Complete at ' + scrapeTime);
+// });
+// ##########################################
+
+
+// ==========================================
+// Retrieve data from the db (all currently-scraped articles)  *******mongoose*******
+app.get('/all', function(req, res) {
+  // Find all results from the scrapedNews collection in the db
+  db.scrapedNews.find({}, function(error, found) {
+    // Throw any errors to the console
+    if (error) {
+      console.log(error);
+    }
+    // If there are no errors, send the data to the browser as json
+    else {
+      res.json(found);
+    }
+  });
+});
+// ==========================================
+
+
+// ##########################################
+// // Retrieve data from the db (all currently-scraped articles)  *******WITH MONGOJS*******
+// app.get('/all', function(req, res) {
+//   // Find all results from the scrapedNews collection in the db
+//   db.scrapedNews.find({}, function(error, found) {
+//     // Throw any errors to the console
+//     if (error) {
+//       console.log(error);
+//     }
+//     // If there are no errors, send the data to the browser as json
+//     else {
+//       res.json(found);
+//     }
+//   });
 // });
 // ##########################################
 

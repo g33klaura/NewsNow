@@ -29,3 +29,9 @@ controller/api-routes.js ~
 controller/html-routes.js ~ *NOT ACTUALLY SURE I NEED...
 
 */
+
+// index route loads view.html    ***worked except couldn't load js scripts
+// From 15-Sequelized>Sat>15-Post-Author_joins
+// app.get("/", function(req, res) {
+//   res.sendFile(path.join(__dirname, "app/public/index.html"));
+// });

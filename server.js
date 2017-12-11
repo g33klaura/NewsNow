@@ -3,50 +3,63 @@
     
 // DEPENDENCIES
 // ==========================================
-var express = require("express");
-var mongojs = require("mongojs");
-var request = require("request");
-var exphbs = require("express-handlebars");
-var bodyParser = require("body-parser");
-var path = require("path");
-var logger = require("morgan");
-var mongoose = require("mongoose");
+var express = require('express');
+var mongojs = require('mongojs');
+var request = require('request');
+var exphbs = require('express-handlebars');
+var bodyParser = require('body-parser');
+var path = require('path');
+var logger = require('morgan');
+var mongoose = require('mongoose');
 
 // Scraping tools
-var axios = require("axios");
-var cheerio = require("cheerio");
+var axios = require('axios');  //Not required for project; says to use request
+var cheerio = require('cheerio');
 
-// Require all models
-var db = require("./models");
-
-var PORT = 3000;  //Will need env port once deployed?
+var PORT = 3000;  //Will need env port once deployed?************
 
 // Initialize Express
 var app = express();
 
 // Database configuration
-var databaseUrl = "newsNow";
-var collections = ["scrapedNews"];
+var databaseUrl = 'newsNow';
+var collections = ['scrapedNews'];
 
 
 // SETUP
 // ==========================================
 // Hook mongojs configuration to the db variable
-var db = mongojs(databaseUrl, collections);
-db.on("error", function(error) {
-  console.log("Database Error:", error);
-});
+// var db = mongojs(databaseUrl, collections);
+// db.on("error", function(error) {
+//   console.log("Database Error:", error);
+// });
+
+// Require all models
+var db = require('./models');
+
+// Use morgan logger for logging requests
+app.use(logger('dev'));
+
+// Use body-parser for handling form submissions
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Handlebars setup
 // Serve static content for the app from the "public" directory in the application directory
 app.use(express.static('public'));
 
-app.use(bodyParser.urlencoded({ extended: false }));
-
 // Set default handlebars template
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 // app.set('view engine', path.join(__dirname, 'app/views'), 'handlebars');
 app.set('view engine', 'handlebars');
+
+// Mongoose setup
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect('mongodb://localhost/newNewsNow', {
+  useMongoClient: true
+});
+
 
 // VARIABLES
 // ==========================================
@@ -61,7 +74,7 @@ var scrapeTime = new Date(Date.now()).toLocaleString();
 // });
 
 var routes = require('./controller/api-routes.js');
-app.use("/", routes);
+app.use('/', routes);
 
 // index route loads view.html    ***worked except couldn't load js scripts
 // From 15-Sequelized>Sat>15-Post-Author_joins
@@ -69,8 +82,8 @@ app.use("/", routes);
 //   res.sendFile(path.join(__dirname, "app/public/index.html"));
 // });
 
-// Retrieve data from the db (all currently-scraped articles)
-app.get("/all", function(req, res) {
+// Retrieve data from the db (all currently-scraped articles)  *******WITH MONGOJS*******
+app.get('/all', function(req, res) {
   // Find all results from the scrapedNews collection in the db
   db.scrapedNews.find({}, function(error, found) {
     // Throw any errors to the console
@@ -84,18 +97,27 @@ app.get("/all", function(req, res) {
   });
 });
 
-// Route for scraping new articles
+// ==========================================
+// Route for scraping new articles, using Mongoose
+
+
+
+// ==========================================
+
+
+// ##########################################
+// Route for scraping new articles  ****MongoJS way, not Mongoose****
 // Scrape data from one site and place it into the mongodb db
-app.get("/scrape", function(req, res) {
-  // Make a request for the news section of ycombinator
-  request("https://www.goodnewsnetwork.org/", function(error, response, html) {
+app.get('/scrape', function(req, res) {
+  // Make a request for the news section of goodnewsnetwork
+  request('https://www.goodnewsnetwork.org/', function(error, response, html) {
     // Load the html body from request into cheerio
     var $ = cheerio.load(html);
     // For each element with a "title" class
-    $(".thumb-wrap").each(function(i, element) {
+    $('.thumb-wrap').each(function(i, element) {
       // Save the text and href of each link enclosed in the current element
-      var title = $(element).children().attr("title");
-      var link = $(element).children().attr("href");
+      var title = $(element).children().attr('title');
+      var link = $(element).children().attr('href');
 
       // If this found element had both a title and a link
       if (title && link) {
@@ -117,19 +139,19 @@ app.get("/scrape", function(req, res) {
       }
     });
   });
-
   // Send a "Scrape Complete" message with current time to the browser
-  res.send("Scrape Complete at " + scrapeTime);
+  res.send('Scrape Complete at ' + scrapeTime);
 });
+// ##########################################
 
 
 // Route for retrieving saved articles
-app.get("/saved", function(req, res) {
+app.get('/saved', function(req, res) {
 
 });
 
 
 // Listen on port set in variable above (depending on environment)
 app.listen(PORT, function() {
-  console.log("App running on port " + PORT);
+  console.log('App running on port ' + PORT);
 });

@@ -73,14 +73,14 @@ var scrapeTime = new Date(Date.now()).toLocaleString();
 //   res.send("Hello world");
 // });
 
-// Main route, render Handlebars index*****does this actually do anything yet..........
+// Main route, render Handlebars index
 var routes = require('./controller/api-routes.js');
 app.use('/', routes);
 
 
 // ==========================================
 // Route for scraping new articles, using Mongoose
-// NEED TO TIE THIS TO THE BUTTON STILL*******************
+// NEED TO TIE THIS TO THE BUTTON STILL  ~Should be working
 app.get('/scrape', function(req, res) {
 
   // Make a request for the news section of goodnewsnetwork
@@ -109,17 +109,14 @@ app.get('/scrape', function(req, res) {
           title: result.title,
           link: result.link
         },
-      function(err, scraped) {
-        if (err) {
-          console.log(err);
-        }
-        else {
-          console.log(scraped);
-        }
-      });
-
-
-
+        function(err, scraped) {
+          if (err) {
+            console.log(err);
+          }
+          else {
+            console.log(scraped);
+          }
+        });
       }  
       //^^if statement closes
     });

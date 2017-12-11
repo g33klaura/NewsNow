@@ -99,7 +99,41 @@ app.get('/all', function(req, res) {
 
 // ==========================================
 // Route for scraping new articles, using Mongoose
+app.get('/scrape', function(req, res) {
 
+  // Make a request for the news section of goodnewsnetwork
+  request('https://www.goodnewsnetwork.org/', function(error, response, html) {
+    // Load the html body from request into cheerio
+    var $ = cheerio.load(html);
+
+    // For each element that contains article elements
+    $('.thumb-wrap').each(function(i, element) {
+      // Save an empty result object
+      var result = {};
+
+      // Add the text and href of every link, and save them as properties of the result object
+      result.title = $(this).children().attr('title');
+      result.link = $(this).children().attr('href');
+
+      // If this found element had both a title and a link
+      if (result.title && result.link) {
+        
+        // Create a new Article using the `result` object built from scraping
+        // Article is model
+        db.Article
+        .create(result)
+        .then(function(dbArticle) {
+          // If we were able to successfully scrape and save an Article, send a message to the client
+          res.send('Scrape Complete at ' + scrapeTime);
+        })
+        .catch(function(err) {
+          // If an error occurred, send it to the client
+          res.json(err);
+        });
+      }  //if statement closes
+    });
+  });
+});
 
 
 // ==========================================
@@ -108,40 +142,40 @@ app.get('/all', function(req, res) {
 // ##########################################
 // Route for scraping new articles  ****MongoJS way, not Mongoose****
 // Scrape data from one site and place it into the mongodb db
-app.get('/scrape', function(req, res) {
-  // Make a request for the news section of goodnewsnetwork
-  request('https://www.goodnewsnetwork.org/', function(error, response, html) {
-    // Load the html body from request into cheerio
-    var $ = cheerio.load(html);
-    // For each element with a "title" class
-    $('.thumb-wrap').each(function(i, element) {
-      // Save the text and href of each link enclosed in the current element
-      var title = $(element).children().attr('title');
-      var link = $(element).children().attr('href');
+// app.get('/scrape', function(req, res) {
+//   // Make a request for the news section of goodnewsnetwork
+//   request('https://www.goodnewsnetwork.org/', function(error, response, html) {
+//     // Load the html body from request into cheerio
+//     var $ = cheerio.load(html);
+//     // For each element with a "title" class
+//     $('.thumb-wrap').each(function(i, element) {
+//       // Save the text and href of each link enclosed in the current element
+//       var title = $(element).children().attr('title');
+//       var link = $(element).children().attr('href');
 
-      // If this found element had both a title and a link
-      if (title && link) {
-        // Insert the data in the scrapedNews db
-        db.scrapedNews.insert({
-          title: title,
-          link: link
-        },
-        function(err, inserted) {
-          if (err) {
-            // Log the error if one is encountered during the query
-            console.log(err);
-          }
-          else {
-            // Otherwise, log the inserted data
-            console.log(inserted);
-          }
-        });
-      }
-    });
-  });
-  // Send a "Scrape Complete" message with current time to the browser
-  res.send('Scrape Complete at ' + scrapeTime);
-});
+//       // If this found element had both a title and a link
+//       if (title && link) {
+//         // Insert the data in the scrapedNews db
+//         db.scrapedNews.insert({
+//           title: title,
+//           link: link
+//         },
+//         function(err, inserted) {
+//           if (err) {
+//             // Log the error if one is encountered during the query
+//             console.log(err);
+//           }
+//           else {
+//             // Otherwise, log the inserted data
+//             console.log(inserted);
+//           }
+//         });
+//       }
+//     });
+//   });
+//   // Send a "Scrape Complete" message with current time to the browser
+//   res.send('Scrape Complete at ' + scrapeTime);
+// });
 // ##########################################
 
 

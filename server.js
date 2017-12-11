@@ -34,9 +34,6 @@ var app = express();
 //   console.log("Database Error:", error);
 // });
 
-// Require all models
-var db = require('./models');
-
 // Use morgan logger for logging requests
 app.use(logger('dev'));
 
@@ -44,6 +41,9 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+
+// Require all models
+var db = require('./models');
 
 // Handlebars setup
 // Serve static content for the app from the "public" directory in the application directory

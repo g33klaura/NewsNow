@@ -63,8 +63,9 @@ mongoose.connect('mongodb://localhost/newNewsNow', {
 
 // VARIABLES
 // ==========================================
-// Add the time the scrape was completed
+// Add the time when scrape is completed
 var scrapeTime = new Date(Date.now()).toLocaleString();
+
 
 // ROUTING
 // ==========================================
@@ -73,7 +74,7 @@ var scrapeTime = new Date(Date.now()).toLocaleString();
 //   res.send("Hello world");
 // });
 
-// Main route, render Handlebars index
+// Main route, renders Handlebars index
 var routes = require('./controller/api-routes.js');
 app.use('/', routes);
 
@@ -85,11 +86,9 @@ app.get('/scrape', function(req, res) {
 
   // Make a request for the news section of goodnewsnetwork
   request('https://www.goodnewsnetwork.org/', function(error, response, html) {
-  // axios.get('https://www.goodnewsnetwork.org/').then(function(response) {
     
   // Load the html body from request into cheerio
     var $ = cheerio.load(html);
-    // var $ = cheerio.load(response.data);
 
     // For each element that contains article elements
     $('.thumb-wrap').each(function(i, element) {
@@ -168,10 +167,10 @@ app.get('/scrape', function(req, res) {
 
 
 // ==========================================
-// Retrieve data from the db (all currently-scraped articles)  *******mongoose*******
+// Retrieve data from the db (all currently-scraped articles)  *******MAKE IT mongoose*******
 app.get('/all', function(req, res) {
   // Find all results from the scrapedNews collection in the db
-  db.scrapedNews.find({}, function(error, found) {
+  db.Article.find({}, function(error, found) {
     // Throw any errors to the console
     if (error) {
       console.log(error);

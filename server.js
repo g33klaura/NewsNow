@@ -101,28 +101,31 @@ app.get('/scrape', function(req, res) {
       result.link = $(this).children().attr('href');
 
       // If this found element had both a title and a link
-      // if (result.title && result.link) {
+      if (result.title && result.link) {
         
         // Create a new Article using the `result` object built from scraping
-        // Article is model
-        db.Article
-        .create(result)
-        .then(function(dbArticle) {
-          // If successful, send a message to the client
-          res.send('Scrape Complete at ' + scrapeTime);
-          console.log(dbArticle);
-        })
-        .catch(function(err) {
-          // If an error occurred, send it to the client
-          res.json(err);
-        });
-      // }  
+        // (Article is set in models)
+        db.Article.create({
+          title: result.title,
+          link: result.link
+        },
+      function(err, scraped) {
+        if (err) {
+          console.log(err);
+        }
+        else {
+          console.log(scraped);
+        }
+      });
+
+
+
+      }  
       //^^if statement closes
     });
   });
-  // console.log(dbArticle);
-  // // If we were able to successfully scrape and save an Article, send a message to the client
-  // res.send('Scrape Complete at ' + scrapeTime); 
+  // If successful, send a message to the client
+  res.send('Scrape Complete at ' + scrapeTime); 
 });
 // ==========================================
 

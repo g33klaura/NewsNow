@@ -103,8 +103,10 @@ app.get('/scrape', function(req, res) {
 
   // Make a request for the news section of goodnewsnetwork
   request('https://www.goodnewsnetwork.org/', function(error, response, html) {
+  // request('https://www.goodnewsnetwork.org/').then(function(response) {  
     // Load the html body from request into cheerio
     var $ = cheerio.load(html);
+    // var $ = cheerio.load(response.data);
 
     // For each element that contains article elements
     $('.thumb-wrap').each(function(i, element) {
@@ -116,23 +118,28 @@ app.get('/scrape', function(req, res) {
       result.link = $(this).children().attr('href');
 
       // If this found element had both a title and a link
-      if (result.title && result.link) {
+      // if (result.title && result.link) {
         
         // Create a new Article using the `result` object built from scraping
         // Article is model
         db.Article
         .create(result)
         .then(function(dbArticle) {
+          console.log(dbArticle);
           // If we were able to successfully scrape and save an Article, send a message to the client
-          res.send('Scrape Complete at ' + scrapeTime);
+          res.send('Scrape Complete at ' + scrapeTime); 
         })
         .catch(function(err) {
           // If an error occurred, send it to the client
           res.json(err);
         });
-      }  //if statement closes
+      // }  
+      //^^if statement closes
     });
   });
+  // console.log(dbArticle);
+  // // If we were able to successfully scrape and save an Article, send a message to the client
+  // res.send('Scrape Complete at ' + scrapeTime); 
 });
 
 

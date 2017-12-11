@@ -28,13 +28,19 @@
     </ul>
   </div>
 </nav>
-
 <div class="container">
   <!-- Empty div for articles table to render dynamically on button clicks -->
   <div class="article-list center-align">
-    <h1>Use handlebars partial templates!!</h1>
-    <h2>Table with headlines renders here!</h2>
-    {{!-- {{> new-block }} --}}
+    <h2>Table with articles renders here</h2>
+    <table>
+      <tbody>
+        <tr>
+          {{#each Article}}
+            {{> new-block }}
+          {{/each}}
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 <!-- ^^Closes overall container div -->

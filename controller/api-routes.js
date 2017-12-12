@@ -17,6 +17,15 @@ router.get('/', function (req, res) {
 
   db.Article.find({}, {}, function (error, data) {
 
+    // Checking if there are articles currently in the db
+    var numberArticles = data.length;
+
+    if (numberArticles != 0) {
+      console.log('Currently ' + numberArticles + ' articles in the database.');
+    } else {
+      console.log('No scraped articles in database.');
+    }
+
     if (error) {
       console.log(error);
     } else {
@@ -30,6 +39,7 @@ router.get('/', function (req, res) {
 
       // console.log(data);
       console.log(hbsObject);
+
       res.render('index', hbsObject);
     }
   });

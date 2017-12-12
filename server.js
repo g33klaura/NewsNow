@@ -89,20 +89,29 @@ app.use('/', routes);
 app.get('/scrape', function (req, res) {
 
   // Make a request for the news section of goodnewsnetwork
-  request('https://www.goodnewsnetwork.org/', function (error, response, html) {
+  // request('https://www.goodnewsnetwork.org/', function (error, response, html) {
+  request('https://earther.com/c/conservation', function (error, response, html) {
 
     // Load the html body from request into cheerio
     var $ = cheerio.load(html);
 
     // For each element that contains article elements
-    $('.thumb-wrap').each(function (i, element) {
+    // $('.thumb-wrap').each(function (i, element) {
+    $('article').each(function (i, element) {
       // Save an empty result object
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this).children().attr('title');
-      result.link = $(this).children().attr('href');
-      result.image = $(this).children().children('img').attr('src');
+      // GoodNewsNetwork
+      // result.title = $(this).children().attr('title');
+      // result.link = $(this).children().attr('href');
+      // result.image = $(this).children().children('img').attr('src');
+
+      // Earther
+      result.title = $(this).children().children().children().children(".entry-title a").text();
+      result.link = $(this).children().children().children().children("a").attr("href");
+      result.summary = $(this).children().children().children().children(".entry-summary p").text();
+      result.image = $(this).children().children().children().children().children().children("source").attr("data-srcset");
 
       // If this found element had both a title and a link
       // These each have requirements of "unique", so will they check for articles already in db?.....
@@ -113,6 +122,7 @@ app.get('/scrape', function (req, res) {
         db.Article.create({
             title: result.title,
             link: result.link,
+            summary: result.summary,
             image: result.image
           },
           function (err, scraped) {

@@ -105,6 +105,7 @@ app.get('/scrape', function (req, res) {
       result.image = $(this).children().children('img').attr('src');
 
       // If this found element had both a title and a link
+      // These each have requirements of "unique", so will they check for articles already in db?.....
       if (result.title && result.link) {
 
         // Create a new Article using the `result` object built from scraping
@@ -118,57 +119,26 @@ app.get('/scrape', function (req, res) {
             if (err) {
               console.log(err);
             } else {
-              console.log(scraped);
+              // console.log(scraped);
+              // res.json(scraped);
+              // console.log('Scrape successful.');
             }
           });
       }
       //^^if statement closes
+      else {
+        console.log('No new articles to scrape.');
+      }
     });
   });
   // If successful, send a message to the client
   res.send('Scrape Complete at ' + scrapeTime);
+
+  // ^^This doesn't ever show b/c not going to localhose:3000/scrape..........
+  // Need to refresh & load '/' somehow......
 });
 // ==========================================
 
-
-// ##########################################
-// Route for scraping new articles  ****MongoJS way, not Mongoose****
-// Scrape data from one site and place it into the mongodb db
-// app.get('/scrape', function(req, res) {
-//   // Make a request for the news section of goodnewsnetwork
-//   request('https://www.goodnewsnetwork.org/', function(error, response, html) {
-//     // Load the html body from request into cheerio
-//     var $ = cheerio.load(html);
-//     // For each element with a "title" class
-//     $('.thumb-wrap').each(function(i, element) {
-//       // Save the text and href of each link enclosed in the current element
-//       var title = $(element).children().attr('title');
-//       var link = $(element).children().attr('href');
-
-//       // If this found element had both a title and a link
-//       if (title && link) {
-//         // Insert the data in the scrapedNews db
-//         db.scrapedNews.insert({
-//           title: title,
-//           link: link
-//         },
-//         function(err, inserted) {
-//           if (err) {
-//             // Log the error if one is encountered during the query
-//             console.log(err);
-//           }
-//           else {
-//             // Otherwise, log the inserted data
-//             console.log(inserted);
-//           }
-//         });
-//       }
-//     });
-//   });
-//   // Send a "Scrape Complete" message with current time to the browser
-//   res.send('Scrape Complete at ' + scrapeTime);
-// });
-// ##########################################
 
 
 // ==========================================

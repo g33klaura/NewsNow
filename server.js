@@ -102,6 +102,7 @@ app.get('/scrape', function (req, res) {
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this).children().attr('title');
       result.link = $(this).children().attr('href');
+      result.image = $(this).children('img').attr('src');
 
       // If this found element had both a title and a link
       if (result.title && result.link) {
@@ -110,7 +111,8 @@ app.get('/scrape', function (req, res) {
         // (Article is set in models)
         db.Article.create({
             title: result.title,
-            link: result.link
+            link: result.link,
+            image: result.image
           },
           function (err, scraped) {
             if (err) {

@@ -18,6 +18,10 @@ var ArticleSchema = new Schema({
     required: true,
     unique: true
   },
+  // `summary` is not required and type of String
+  summary: {
+    type: String
+  },
   // `image` is not required and of type String
   image: {
     type: String

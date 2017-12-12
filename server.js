@@ -85,7 +85,7 @@ app.use('/', routes);
 
 // ==========================================
 // Route for scraping new articles, using Mongoose
-// NEED TO TIE THIS TO THE BUTTON STILL  ~Should be working
+// Triggers on "New Articles" button click
 app.get('/scrape', function (req, res) {
 
   // Make a request for the news section of goodnewsnetwork
@@ -102,7 +102,7 @@ app.get('/scrape', function (req, res) {
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this).children().attr('title');
       result.link = $(this).children().attr('href');
-      result.image = $(this).children('img').attr('src');
+      result.image = $(this).children().children('img').attr('src');
 
       // If this found element had both a title and a link
       if (result.title && result.link) {

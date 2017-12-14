@@ -42,7 +42,7 @@ router.get('/', function (req, res) {
 
       res.render('index', hbsObject);
     }
-  });
+  }).sort({_id:-1});
 
 }); //Closes router.get
 

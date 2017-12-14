@@ -16,7 +16,7 @@ var mongoose = require('mongoose');
 var axios = require('axios'); //Not required for project; says to use request
 var cheerio = require('cheerio');
 
-var PORT = 3000; //Will need env port once deployed?************
+var PORT = process.env.PORT || 3000; //Will need env port once deployed?************
 
 // Initialize Express
 var app = express();
@@ -56,16 +56,16 @@ app.engine('handlebars', exphbs({
 // app.set('view engine', path.join(__dirname, 'app/views'), 'handlebars');
 app.set('view engine', 'handlebars');
 
-// Mongoose setup
-// Set mongoose to leverage built in JavaScript ES6 Promises
-// Connect to the Mongo DB
-mongoose.Promise = Promise;
 
 // 'mongodb:heroku_5c0jl3bv:1b0s7oi3b70a5cibjci9pkfhcr@ds137686.mlab.com:37686/heroku_5c0jl3bv'
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database    
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newNewsNow";
 
+// Mongoose setup
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI, {
   useMongoClient: true
 });

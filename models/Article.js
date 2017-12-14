@@ -10,13 +10,31 @@ var ArticleSchema = new Schema({
   title: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    validate: {
+      isAsync: true,
+      validator: function(v, cb) {
+        Article.find({title: v}, function(err, docs) {
+          cb(docs.length == 0);
+        });
+      },
+      message: 'Title already exists in database.'
+    }
   },
   // `link` is required and of type String
   link: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    validate: {
+      isAsync: true,
+      validator: function(v, cb) {
+        Article.find({link: v}, function(err, docs) {
+          cb(docs.length == 0);
+        });
+      },
+      message: 'Link already exists in database.'
+    }
   },
   // `summary` is not required and type of String
   summary: {

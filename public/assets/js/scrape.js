@@ -28,8 +28,12 @@ function scrapeArticles() {
   $.getJSON('/scrape', function (data) {
     console.log(data);
 
+    // Display current date & time here for testing
+    var scrapeTime = new Date(Date.now()).toLocaleString();
+    console.log('Scrape completed at: ' + scrapeTime);
     // scrape for new, then display
     // displayAllArticles();
+
   });
 }
 
@@ -46,9 +50,9 @@ $(document).ready(function () {
     // Call function to render number of articles have been scraped OR "no new articles" message***
     scrapeArticles();
 
-    // Display current date & time here for testing
-    var scrapeTime = new Date(Date.now()).toLocaleString();
-    console.log(scrapeTime);
+    // // Display current date & time here for testing
+    // var scrapeTime = new Date(Date.now()).toLocaleString();
+    // console.log(scrapeTime);
   });
 
 

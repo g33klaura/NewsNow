@@ -8,30 +8,30 @@ function saveArticle() {
   let currentId = currentPost.attr('data-id');
   console.log(currentId);
 
-  // let currentState = currentPost.attr('data-state');
-  // console.log(currentState);
+  let currentState = currentPost.attr('data-state');
+  console.log(currentState);
 
-  // switch (currentState) {
-  //   case 'unsaved':
-  //     $(currentPost).attr('data-state', 'saved');
-  //     console.log('Article switched to saved');
-  //     break;
+  switch (currentState) {
+    case 'unsaved':
+      $(currentPost).attr('data-state', 'saved');
+      console.log('Article switched to saved');
+      break;
   
-  //   default:
-  //     console.log('Article not saved');
-  //     break;
-  // }
+    default:
+      console.log('Article not saved');
+      break;
+  }
 
   // Perform Mongoose findOneAndUpdate()
-  $.getJSON('/saveArticle', function (currentId) {
+  // $.getJSON('/saveArticle', function (currentId) {
 
-    // None of these things print, but needs $.getJSON...
-    console.log(currentId);
-    console.log('Article saved');
-    console.log('testing 1, 2, 3');
+  //   // None of these things print, but needs $.getJSON...
+  //   console.log(currentId);
+  //   console.log('Article saved');
+  //   console.log('testing 1, 2, 3');
 
-    // Modal message "article saved"
-  });
+  //   // Modal message "article saved"
+  // });
 }
 
 

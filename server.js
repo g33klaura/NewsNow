@@ -117,6 +117,10 @@ app.get('/scrape', function (req, res) {
       // These each have requirements of "unique", so will they check for articles already in db?.....
       if (result.title && result.link) {
 
+        // Check for duplicates here*****
+        // if no duplicates, THEN create...
+        if (db.Article.validate === true) {
+
         // Create a new Article using the `result` object built from scraping
         // (Article is set in models)
         db.Article.create({
@@ -134,10 +138,14 @@ app.get('/scrape', function (req, res) {
               // console.log('Scrape successful.');
             }
           });
+        } else {
+          console.log('No new articles to scrape. Ln 142');
+        }
       }
       //^^if statement closes
       else {
         console.log('No new articles to scrape.');
+        res.redirect('/');
       }
     });
   });

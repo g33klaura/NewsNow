@@ -145,13 +145,13 @@ app.get('/scrape', function (req, res) {
       //^^if statement closes
       else {
         console.log('No new articles to scrape.');
-        res.redirect('/');
+        // res.redirect('/');
       }
     });
   });
   // If successful, send a message to the client
-  res.send('Scrape Complete at ' + scrapeTime);
-
+  // res.send('Scrape Complete at ' + scrapeTime);
+  res.redirect('/');
   // ^^This doesn't ever show b/c not going to localhose:3000/scrape..........
   // Need to refresh & load '/' somehow......
 });
@@ -161,19 +161,19 @@ app.get('/scrape', function (req, res) {
 
 // ==========================================
 // Retrieve data from the db (all currently-scraped articles)  *******MAKE IT mongoose*******
-app.get('/all', function (req, res) {
-  // Find all results from the scrapedNews collection in the db
-  db.Article.find({}, function (error, found) {
-    // Throw any errors to the console
-    if (error) {
-      console.log(error);
-    }
-    // If there are no errors, send the data to the browser as json
-    else {
-      res.json(found);
-    }
-  });
-});
+// app.get('/all', function (req, res) {
+//   // Find all results from the scrapedNews collection in the db
+//   db.Article.find({}, function (error, found) {
+//     // Throw any errors to the console
+//     if (error) {
+//       console.log(error);
+//     }
+//     // If there are no errors, send the data to the browser as json
+//     else {
+//       res.json(found);
+//     }
+//   });
+// });
 // ==========================================
 
 

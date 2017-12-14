@@ -62,7 +62,7 @@ app.set('view engine', 'handlebars');
 mongoose.Promise = Promise;
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database    
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newNewsNow";
+var MONGODB_URI = process.env.'mongodb:heroku_5c0jl3bv:1b0s7oi3b70a5cibjci9pkfhcr@ds137686.mlab.com:37686/heroku_5c0jl3bv' || 'mongodb://localhost/newNewsNow';
 
 mongoose.connect(MONGODB_URI, {
   useMongoClient: true

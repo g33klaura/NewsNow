@@ -47,6 +47,18 @@ router.get('/', function (req, res) {
 }); //Closes router.get
 
 
+// router.post('/saveArticle', function (req, res) {
+
+//   db.Article.findOneAndUpdate({_id: req.params.id}, { $set: { saved: true }}, function (error, data) {
+
+//     console.log('Maybe something happened?');
+
+//   });
+
+// }); //Closes router.put
+
+
+
 // EXPORTS
 // ==========================================
 // Export routes for server.js

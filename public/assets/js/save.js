@@ -23,8 +23,15 @@ function saveArticle() {
   // }
 
   // Perform Mongoose findOneAndUpdate()
-  
+  $.getJSON('/saveArticle', function (currentId) {
 
+    // None of these things print, but needs $.getJSON...
+    console.log(currentId);
+    console.log('Article saved');
+    console.log('testing 1, 2, 3');
+
+    // Modal message "article saved"
+  });
 }
 
 

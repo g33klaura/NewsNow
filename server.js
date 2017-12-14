@@ -151,9 +151,10 @@ app.get('/scrape', function (req, res) {
   });
   // If successful, send a message to the client
   // res.send('Scrape Complete at ' + scrapeTime);
-  res.redirect('/');
   // ^^This doesn't ever show b/c not going to localhose:3000/scrape..........
+
   // Need to refresh & load '/' somehow......
+  res.redirect('/');
 });
 // ==========================================
 
@@ -177,22 +178,20 @@ app.get('/scrape', function (req, res) {
 // ==========================================
 
 
-// ##########################################
-// // Retrieve data from the db (all currently-scraped articles)  *******WITH MONGOJS*******
-// app.get('/all', function(req, res) {
-//   // Find all results from the scrapedNews collection in the db
-//   db.scrapedNews.find({}, function(error, found) {
-//     // Throw any errors to the console
-//     if (error) {
-//       console.log(error);
-//     }
-//     // If there are no errors, send the data to the browser as json
-//     else {
-//       res.json(found);
-//     }
-//   });
-// });
-// ##########################################
+// Route to mark article as saved
+app.get('/saveArticle', function (req, res) {
+  
+  db.Article.findOneAndUpdate({_id: req.params.id}, 
+    { $set: { saved: true }}, function (error, data) {
+    
+    console.log('Maybe something happened?');
+    console.log(req.params.id);  //undefined
+        
+  });
+});
+
+
+
 
 
 // Route for retrieving saved articles

@@ -1,6 +1,3 @@
-// From 18-mongodb>Thursday>11-Scraping-into-db
-// may also need Thursday>10-mongojs-and-front-end
-
 // DEPENDENCIES
 // ==========================================
 var express = require('express');
@@ -16,7 +13,7 @@ var mongoose = require('mongoose');
 var axios = require('axios'); //Not required for project; says to use request
 var cheerio = require('cheerio');
 
-var PORT = process.env.PORT || 3000; //Will need env port once deployed?************
+var PORT = process.env.PORT || 3000;
 
 // Initialize Express
 var app = express();
@@ -55,9 +52,6 @@ app.engine('handlebars', exphbs({
 }));
 // app.set('view engine', path.join(__dirname, 'app/views'), 'handlebars');
 app.set('view engine', 'handlebars');
-
-
-// 'mongodb:heroku_5c0jl3bv:1b0s7oi3b70a5cibjci9pkfhcr@ds137686.mlab.com:37686/heroku_5c0jl3bv'
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database    
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newNewsNow";
@@ -187,7 +181,7 @@ app.get('/scrape', function (req, res) {
 // });
 // ==========================================
 
-
+// *****Make ajax call in Save.js!!!!! Connect to this
 // Route to mark article as saved
 app.get('/saveArticle', function (req, res) {
   

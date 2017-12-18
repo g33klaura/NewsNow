@@ -188,7 +188,7 @@ app.get('/saveArticle/:id', function (req, res) {
   db.Article.findOneAndUpdate({_id: req.params.id}, 
     { $set: { saved: true }}, function (error, data) {
     
-    console.log('Maybe something happened?');
+    console.log('Article marked saved');
     console.log(req.params.id);  //id prints!!!
         
   });
@@ -212,6 +212,18 @@ app.get('/saved', function (req, res) {
       // Which page renders?? How to use other partial?...
       res.render('index', hbsObject);
     }
+  });
+});
+
+// Route for deleting saved articles
+app.get('/removeArticle/:id', function (req, res) {
+  
+  db.Article.findOneAndUpdate({_id: req.params.id}, 
+    { $set: { saved: false }}, function (error, data) {
+    
+    console.log('Removed article from saved');
+    console.log(req.params.id);
+        
   });
 });
 

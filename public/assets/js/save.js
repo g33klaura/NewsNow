@@ -30,10 +30,11 @@ function saveArticle() {
   }).done(function(response) {
     console.log(response);
     // ^Nothing logged
-    location.reload('/');
+    // location.reload(true);
     // ^^Will this make the saved article dissapear from the main page, b/c handlebars??
     // isn't working yet...
-  })
+  });
+  location.reload(true);
 }
 
 function removeArticle() {
@@ -50,8 +51,9 @@ function removeArticle() {
   }).done(function(response) {
     // console.log(response);
     // ^Nothing logged
-    location.reload('/');
+    // location.reload('/');
   })
+  location.reload(true);
 }
 
 function viewSaved() {

@@ -1,43 +1,21 @@
 // FUNCTIONS
 // ==========================================
-// Need functions to:
-// scrapeArticles
-// saveArticle  **save in new script?
-// ^^May need "setActive" example from Activity 10/Thurs
-// renderArticles (on the page)
-// renderHandlebars
-// noNewArticles
-// displayAllArticles
 
+// function renderModal() {
+//   // Target some empty div in index.handlebars
+//   // var articleModal = 
+//   // Save modal html to variable
+//   // Then append that variable to the empty modal div?
 
-// function renderHandlebars() {
-//   // $('.article-list').html('{{> (new-block) }}');
-//   console.log('Template should load');  //Doesn't fire...
-//   // Needs something in api-routes?????????
-// }
+//   $('.modal').html('<a class="waves-effect waves-light btn modal-trigger" href="#modal-articles">I is a Modal</a>');
 
-// function displayAllArticles() {
-//   // $.getJSON('/', function(data) {
-//   //   // Need to render handlebars template
-//   //   renderHandlebars();
-//   // });
-// }
-
-function renderModal() {
-  // Target some empty div in index.handlebars
-  // var articleModal = 
-  // Save modal html to variable
-  // Then append that variable to the empty modal div?
-
-  $('.modal').html('<a class="waves-effect waves-light btn modal-trigger" href="#modal-articles">I is a Modal</a>');
-
-  if (numberArticles != 0) {
-    console.log('Currently ' + numberArticles + ' articles in the database.');
+//   if (numberArticles != 0) {
+//     console.log('Currently ' + numberArticles + ' articles in the database.');
     
-  } else {
-    console.log('No scraped articles in database.');
-  }
-}
+//   } else {
+//     console.log('No scraped articles in database.');
+//   }
+// }
 
 function scrapeArticles() {
   // Function needs to display number of articles scraped or message that none new(?)
@@ -51,8 +29,10 @@ function scrapeArticles() {
     // displayAllArticles();
 
     var numberArticles = data.length;
-    renderModal();
+    // renderModal();
   });
+  location.reload(true);
+  // ^^Until modal works, have page reload to show articles
 }
 
 

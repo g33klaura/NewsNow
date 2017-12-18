@@ -39,6 +39,9 @@
         {{#unless saved}}
           {{> new-block }}
         {{/unless}}
+        {{#if saved}}
+          {{> saved-block}}
+        {{/if}}
       {{/each}}
     </div>
   </div>

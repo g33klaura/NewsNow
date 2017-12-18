@@ -82,9 +82,13 @@ var scrapeTime = new Date(Date.now()).toLocaleString();
 //   res.send("Hello world");
 // });
 
+// Trying to get saved articles rendering in saved.handlebars template
+const savedGet = express.Router();
+
 // Main route, renders Handlebars index
 var routes = require('./controller/api-routes.js');
 app.use('/', routes);
+app.use('/saved', savedGet);
 
 
 // ==========================================
@@ -196,7 +200,7 @@ app.get('/saveArticle/:id', function (req, res) {
 
 
 // Route for retrieving saved articles
-app.get('/saved', function (req, res) {
+savedGet.get('/saved', function (req, res) {
   db.Article.find({saved: true}, function (error, data) {
     var numberSaved = data.length;
 

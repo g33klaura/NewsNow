@@ -37,6 +37,7 @@ function saveArticle() {
 }
 
 function viewSaved() {
+  console.log('Saved Articles clicked');
   $.getJSON('/saved')
 }
 
@@ -44,7 +45,6 @@ function viewSaved() {
 // MAIN PROCESS
 // ==========================================
 // Saving articles when rendered
-
 $(document).on('click', 'a.save-article', saveArticle);
 
 
@@ -55,4 +55,5 @@ $(document).on('click', 'a.save-article', saveArticle);
 
 
 // Viewing all saved articles! **** this is a ROUTE tho
-$('#view-saved').on('click', viewSaved);
+// $('a.view-saved').on('click', viewSaved);
+$(document).on('click', 'a.view-saved', viewSaved);

@@ -23,21 +23,19 @@ function saveArticle() {
   }
 
   // Need AJAX call to connect with app.get('/saveArticle') route in server.js
-
   $.ajax({
     url: '/saveArticle/' + currentId,
     // id: currentId,
     method: 'GET'
   }).done(function(response) {
     console.log(response);
-    // See what happens here...
     // ^Nothing logged
-    location.reload();
+    location.reload('/');
     // ^^Will this make the saved article dissapear from the main page, b/c handlebars??
+    // isn't working yet...
   })
 
 }
-
 
 
 // MAIN PROCESS
@@ -45,7 +43,6 @@ function saveArticle() {
 // Saving articles when rendered
 
 $(document).on('click', 'a.save-article', saveArticle);
-
 
 
 // Adding a note

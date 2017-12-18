@@ -34,7 +34,10 @@ function saveArticle() {
     // ^^Will this make the saved article dissapear from the main page, b/c handlebars??
     // isn't working yet...
   })
+}
 
+function viewSaved() {
+  $.getJSON('/saved')
 }
 
 
@@ -52,3 +55,4 @@ $(document).on('click', 'a.save-article', saveArticle);
 
 
 // Viewing all saved articles! **** this is a ROUTE tho
+$('#view-saved').on('click', viewSaved);

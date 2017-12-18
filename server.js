@@ -195,12 +195,23 @@ app.get('/saveArticle/:id', function (req, res) {
 });
 
 
-
-
-
 // Route for retrieving saved articles
 app.get('/saved', function (req, res) {
+  db.Article.find({saved: true}, function (error, data) {
+    var numberSaved = data.length;
 
+    if (numberSaved === 0) {
+      console.log('No articles currently saved.');
+    } else {
+      var hbsObject = {
+        Article: data
+      }
+      console.log('Saved articles:');
+      console.log(hbsObject);
+      // Which page renders?? How to use other partial?...
+      res.render('index', hbsObject);
+    }
+  });
 });
 
 

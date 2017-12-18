@@ -22,9 +22,13 @@ MongoDB, Mongoose, Express, Node, Handlebars, Materialize CSS
 1. On page load, articles currently stored in database will render
 1. Clicking "New Articles" will scrape for any new entries
 1. Currently the user needs to refresh the page to view any newly scraped articles**
+1. Articles will mark as "saved" on Save Article button click
 1. Saving notes function is in process**
 
 ### Screenshots
 
-![Alt Text](/screenshots/articles_screen.png) <br />
+![Index View](/screenshots/articles_screen.png) <br />
 *Initial view of articles*
+
+![Saved Articles](/screenshots/saved_rendering.png) <br />
+*Articles saved on click, can render on index*

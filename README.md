@@ -1,30 +1,30 @@
-<h1 align="center">NewsNow</h1>
+<h1 align="center">NewsNow: Conservation Edition</h1>
 
-<div align="center">Web application that scrapes articles from an online news source, allowing users to view and leave comments on entries.</div>
+<div align="center">Web application that scrapes articles from the environmental news site "Earther."  Users will be able to view articles, choose to save certain ones, and leave comments on saved articles.</div>
 
-# Deployed Application
+## Deployed Application
 
 [Heroku] <https://pure-stream-21176.herokuapp.com/>
 
-## Contents
-
-## Inspiration/ Concept/ Motivation
+<!-- ## Inspiration/ Concept/ Motivation -->
 
 ## Technologies Used
 
-Lorem ipsum, dolor sit,
+MongoDB, Mongoose, Express, Node, Handlebars, Materialize CSS
 
 ## Key Features
 
-* Thing 1
+* Scraping new articles does not produce duplicates
+* Dynamically rendered articles with Handlebars template
 
 ### Application Process
 
-1. Step 1
-1. Step 2
+1. On page load, articles currently stored in database will render
+1. Clicking "New Articles" will scrape for any new entries
+1. Currently the user needs to refresh the page to view any newly scraped articles**
+1. Saving notes function is in process**
 
 ### Screenshots
 
-###### Image caption
-![Alt Text](url)
-*image caption test*
+![Alt Text](/screenshots/articles_screen.png) <br />
+*Initial view of articles*

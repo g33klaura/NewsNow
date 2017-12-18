@@ -183,13 +183,13 @@ app.get('/scrape', function (req, res) {
 
 // *****Make ajax call in Save.js!!!!! Connect to this
 // Route to mark article as saved
-app.get('/saveArticle', function (req, res) {
+app.get('/saveArticle/:id', function (req, res) {
   
   db.Article.findOneAndUpdate({_id: req.params.id}, 
     { $set: { saved: true }}, function (error, data) {
     
     console.log('Maybe something happened?');
-    console.log(req.params.id);  //undefined
+    console.log(req.params.id);  //id prints!!!
         
   });
 });

@@ -22,16 +22,20 @@ function saveArticle() {
       break;
   }
 
-  // Perform Mongoose findOneAndUpdate()
-  // $.getJSON('/saveArticle', function (currentId) {
+  // Need AJAX call to connect with app.get('/saveArticle') route in server.js
 
-  //   // None of these things print, but needs $.getJSON...
-  //   console.log(currentId);
-  //   console.log('Article saved');
-  //   console.log('testing 1, 2, 3');
+  $.ajax({
+    url: '/saveArticle/' + currentId,
+    // id: currentId,
+    method: 'GET'
+  }).done(function(response) {
+    console.log(response);
+    // See what happens here...
+    // ^Nothing logged
+    location.reload();
+    // ^^Will this make the saved article dissapear from the main page, b/c handlebars??
+  })
 
-  //   // Modal message "article saved"
-  // });
 }
 
 

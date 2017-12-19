@@ -1,3 +1,7 @@
 $(document).ready(function() {
-  $(".button-collapse").sideNav();  //Init responsive navbar
+  //Initialize responsive navbar
+  $(".button-collapse").sideNav();
+
+  // Initialize all modals
+  $('.modal').modal();
 })

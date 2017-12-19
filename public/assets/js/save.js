@@ -2,6 +2,10 @@
 // ==========================================
 
 function saveArticle() {
+  // See if modal will popup here...
+  // $('#modal-saved').modal();
+  $('.modal-trigger#modal-saved').modal();
+  // $('#modal-saved').show();
   // console.log('Save Article clicked');
   let currentPost = $(this).parent().parent().parent();
   // console.log(currentPost);
@@ -30,13 +34,16 @@ function saveArticle() {
   }).done(function(response) {
     console.log(response);
     // ^Nothing logged
+
+    // // See if modal will popup here...
+    // $('#modal-saved').modal();
+    // $('#modal-saved').show();
   });
   // location.reload(true);
 
-  // See if modal will popup here...
-  $(document).ready(function(){
-    $('#modal-saved').modal();
-  });
+  // // See if modal will popup here...
+  // $('#modal-saved').modal('open');
+    // $('#modal-saved').show();
 }
 
 function removeArticle() {

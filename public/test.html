@@ -53,6 +53,27 @@
       <div class="article-list center-align">
         <h2>Table with headlines renders here!</h2>
       </div>
+
+      <!-- modal practice -->
+      <div class="row section">
+        <div class="col">
+          <!-- Modal Trigger -->
+          <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Get articles</a>
+        </div>
+      </div>
+      <!-- Modal Structure -->
+      <div id="modal-saved" class="modal">
+        <div class="modal-content">
+          <h4>Modal Header</h4>
+          <p>So then this needs to trigger when the scrape route completes...</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+      </div>
+
+
+
     </div>
     <!-- ^^Closes overall container div -->
 
@@ -67,6 +88,12 @@
     <!-- My JavaScript -->
     <script type="text/javascript" src="assets/js/nav.js"></script>
     <script type="text/javascript" src="assets/js/scrape.js"></script>
+    <script>
+      $(document).ready(function(){
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $('#modal1').modal();
+      });
+    </script>
     <!-- <script type="text/javascript" src="assets/js/save.js"></script> -->
   </body>
 

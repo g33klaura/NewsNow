@@ -2,11 +2,11 @@
 // ==========================================
 
 function saveArticle() {
-  console.log('Save Article clicked');
+  // console.log('Save Article clicked');
   let currentPost = $(this).parent().parent().parent();
   // console.log(currentPost);
   let currentId = currentPost.attr('data-id');
-  console.log(currentId);
+  // console.log(currentId);
 
   // let currentState = currentPost.attr('data-state');
   // console.log(currentState);
@@ -30,11 +30,13 @@ function saveArticle() {
   }).done(function(response) {
     console.log(response);
     // ^Nothing logged
-    // location.reload(true);
-    // ^^Will this make the saved article dissapear from the main page, b/c handlebars??
-    // isn't working yet...
   });
-  location.reload(true);
+  // location.reload(true);
+
+  // See if modal will popup here...
+  $(document).ready(function(){
+    $('#modal-saved').modal();
+  });
 }
 
 function removeArticle() {

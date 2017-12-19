@@ -33,17 +33,13 @@ function saveArticle() {
     method: 'GET'
   }).done(function(response) {
     console.log(response);
-    // ^Nothing logged
+    // ^Nothing logs
 
-    // // See if modal will popup here...
-    // $('#modal-saved').modal();
-    // $('#modal-saved').show();
   });
+  
+  setTimeout(window.location.reload.bind(window.location), 2000);
   // location.reload(true);
 
-  // // See if modal will popup here...
-  // $('#modal-saved').modal('open');
-    // $('#modal-saved').show();
 }
 
 function removeArticle() {

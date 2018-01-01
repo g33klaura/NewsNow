@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+// var Materialize = require('materialize-css');
 
 // Scraping tools
 var axios = require('axios'); //Not required for project; says to use request
@@ -123,7 +124,7 @@ app.get('/scrape', function (req, res) {
 
         // Check for duplicates here*****
         // if no duplicates, THEN create...
-        // if (db.Article.validate === true) {
+        if (db.Article.validate === true) {
 
         // Create a new Article using the `result` object built from scraping
         // (Article is set in models)
@@ -142,9 +143,10 @@ app.get('/scrape', function (req, res) {
               // console.log('Scrape successful.');
             }
           });
-        // } else {
-        //   console.log('No new articles to scrape. Ln 142');
-        // }
+        } else {
+          console.log('No new articles to scrape. Ln 146');
+          // Materialize.toast('No new articles!', 4000);
+        }
       }
       //^^if statement closes
       else {
